@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reto 66 Días: Caminadora & Gardenscapes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 16px;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 1.8em;
+      margin-bottom: 5px;
+      font-weight: 700;
+      word-wrap: break-word;
+    }
+
+    header p {
+      font-size: 0.95em;
+      opacity: 0.95;
+      word-wrap: break-word;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .grid-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border: 1px solid rgba(52, 152, 219, 0.1);
+      width: 100%;
+    }
+
+    .card-progress {
+      text-align: center;
+    }
+
+    .progress-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: conic-gradient(#4CAF50 var(--progress), #e0e0e0 var(--progress));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+      flex-shrink: 0;
+    }
+
+    .progress-inner {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .progress-inner span {
+      font-size: 11px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .phase-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      word-break: break-word;
+    }
+
+    .card-input {
+      background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #2ecc71;
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    @media (min-width: 480px) {
+      .btn-group {
+        flex-direction: row;
+        gap: 8px;
+      }
+    }
+
+    button {
+      padding: 14px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      min-height: 48px;
+      width: 100%;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @media (min-width: 480px) {
+      button {
+        flex: 1;
+      }
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+      color: white;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 10px rgba(46, 204, 113, 0.3);
+    }
+
+    .btn-emergency {
+      background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+      color: white;
+    }
+
+    .btn-emergency:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 10px rgba(243, 156, 18, 0.3);
+    }
+
+    .btn-reset {
+      background: #ecf0f1;
+      color: #e74c3c;
+      border: 2px solid #e74c3c;
+      width: 100%;
+    }
+
+    .btn-reset:active {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .reward-card {
+      background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3);
+      margin-top: 16px;
+      width: 100%;
+    }
+
+    .reward-card h3 {
+      font-size: 0.85em;
+      opacity: 0.95;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .reward-amount {
+      font-size: 2.2em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      word-break: break-word;
+    }
+
+    .reward-progress {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      height: 8px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .reward-progress-bar {
+      height: 100%;
+      background: white;
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+
+    .reward-info {
+      font-size: 0.8em;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+
+    .emergency-alert {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+      display: none;
+      font-size: 13px;
+    }
+
+    .emergency-alert.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .emergency-alert strong {
+      color: #856404;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .schedule {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9em;
+    }
+
+    .schedule thead {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .schedule th {
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .schedule td {
+      padding: 12px;
+      border-bottom: 1px solid #e0e0e0;
+      font-size: 13px;
+    }
+
+    .block-label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .days-range {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .time-badge {
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 11px;
+      display: inline-block;
+    }
+
+    .reward-badge {
+      background: #fff3cd;
+      color: #856404;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 11px;
+      display: inline-block;
+    }
+
+    .motivation-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.95em;
+      line-height: 1.5;
+      font-style: italic;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+      width: 100%;
+    }
+
+    .motivation-box .icon {
+      font-size: 1.8em;
+      margin-bottom: 8px;
+    }
+
+    .schedule-container {
+      overflow-x: auto;
+      margin-top: 16px;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .current-block {
+      background: #e8f8f5;
+      border-left: 4px solid #27ae60;
+    }
+
+    .completed-block {
+      background: #f0f0f0;
+      opacity: 0.7;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+      width: 100%;
+    }
+
+    .stat-box {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #999;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .stat-value {
+      font-size: 1.4em;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .footer-note {
+      font-size: 11px;
+      color: #999;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .schedule-wrapper {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-top: 16px;
+      border: 1px solid rgba(52, 152, 219, 0.1);
+    }
+
+    .schedule-wrapper h2 {
+      margin-bottom: 12px;
+      color: #333;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏃 Reto 66 Días</h1>
+      <p>Caminadora & Gardenscapes - Automatización neurológica de hábitos</p>
+    </header>
+
+    <div class="grid-main">
+      <!-- Card de Progreso -->
+      <div class="card card-progress">
+        <div class="phase-badge" id="phaseBadge">Fase 1: Destrucción</div>
+        
+        <!-- Display de Fecha y Consecutivos -->
+        <div style="background: #f0f8ff; border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 13px; text-align: center; border-left: 4px solid #3498db;">
+          <div style="color: #666; margin-bottom: 6px;">📅 Fecha de Hoy</div>
+          <div style="font-weight: 600; color: #333; margin-bottom: 8px;" id="dateDisplay">--/--/----</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px;">
+            <div style="background: white; padding: 6px; border-radius: 6px;">
+              <div style="color: #999; font-size: 10px;">Días Consecutivos</div>
+              <div style="font-weight: 700; color: #2ecc71; font-size: 16px;" id="consecutiveDays">0</div>
+            </div>
+            <div style="background: white; padding: 6px; border-radius: 6px;">
+              <div style="color: #999; font-size: 10px;">Días sin Actividad</div>
+              <div style="font-weight: 700; color: #e74c3c; font-size: 16px;" id="inactiveDays">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-circle" id="progressCircle" style="--progress: 0%">
+          <div class="progress-inner">
+            <span id="dayNumber">1</span>
+            <span>/ 66</span>
+          </div>
+        </div>
+        <div class="stats-container">
+          <div class="stat-box">
+            <div class="stat-label">Bloque</div>
+            <div class="stat-value" id="blockNumber">1</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Hoy</div>
+            <div class="stat-value" id="todayMinutes">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Meta</div>
+            <div class="stat-value" id="requiredMinutes">20</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card de Entrada -->
+      <div class="card">
+        <div class="card-input">
+          <div class="form-group">
+            <label for="minutesInput">Minutos completados hoy</label>
+            <input type="number" id="minutesInput" min="0" max="40" placeholder="0" value="0" inputmode="numeric">
+          </div>
+
+          <div class="emergency-alert" id="emergencyAlert">
+            <strong>⚠️ Alerta</strong>
+            <span id="emergencyMessage"></span>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn-primary" id="btnRegister" type="button">✓ Registrar</button>
+            <button class="btn-emergency" id="btnEmergency" type="button">🔥 Emergencia</button>
+          </div>
+
+          <button class="btn-reset" id="btnReset" type="button">↻ Reiniciar</button>
+
+          <div class="footer-note">
+            Máx. 2 días emergencia<br>
+            0 minutos = reinicio completo
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card de Recompensa -->
+    <div class="reward-card">
+      <h3>💰 Recompensa Acumulada</h3>
+      <div class="reward-amount" id="rewardAmount">₡0</div>
+      <div class="reward-progress">
+        <div class="reward-progress-bar" id="rewardBar" style="width: 0%"></div>
+      </div>
+      <div class="reward-info">
+        Próximo: <span id="nextReward">₡2,500</span> en <span id="daysUntilReward">11</span> días
+      </div>
+    </div>
+
+    <!-- Box de Motivación -->
+    <div class="motivation-box" id="motivationBox">
+      <div class="icon">💪</div>
+      <p id="motivationText">¡Cada paso cuenta! Hoy es el primer día del resto de tu vida.</p>
+    </div>
+
+    <!-- Tabla de Cronograma -->
+    <div class="schedule-wrapper">
+      <h2>📅 Cronograma General</h2>
+      <div class="schedule-container">
+        <table class="schedule">
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th>Bloque</th>
+              <th>Días</th>
+              <th>Tiempo</th>
+              <th>Premio</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    console.log('App iniciando...');
+
+    const CONFIG = {
+      blocks: [
+        { phase: 'Fase 1: Destrucción', block: 1, days: '01-11', time: 20, reward: 2500 },
+        { phase: 'Fase 1: Destrucción', block: 2, days: '12-22', time: 25, reward: 2500 },
+        { phase: 'Fase 2: Instalación', block: 3, days: '23-33', time: 30, reward: 5000 },
+        { phase: 'Fase 2: Instalación', block: 4, days: '34-44', time: 35, reward: 5000 },
+        { phase: 'Fase 3: Integración', block: 5, days: '45-55', time: 40, reward: 10000 },
+        { phase: 'Fase 3: Integración', block: 6, days: '56-66', time: 40, reward: 10000 }
+      ],
+      motivations: [
+        "💪 Cada paso cuenta. Hoy es el primer día del resto de tu vida.",
+        "🔥 ¡Lo estás haciendo increíble! La consistencia es tu superpoder.",
+        "🌟 Tu cuerpo se está transformando. No abandones ahora.",
+        "🎯 66 días forjan un hábito. Eres más fuerte de lo que crees.",
+        "⚡ La disciplina es libertad. Sigue adelante, campeón.",
+        "🏆 Cada gota de sudor cuenta. ¡Tú puedes!",
+        "🌱 Estás sembrando semillas de éxito. Cosecha pronto.",
+        "💎 Un día más de gloria. Eres un guerrero.",
+        "🚀 La magia sucede fuera de la zona de confort.",
+        "✨ Tu futuro yo está tan orgulloso de ti."
+      ],
+      totalDays: 66,
+      totalReward: 35000,
+      maxEmergencyDays: 2,
+      minEmergencyMinutes: 10,
+      maxDailyMinutes: 40
+    };
+
+    let state = {
+      currentDay: 1,
+      dailyLog: {},
+      emergencyConsecutiveDays: 0,
+      lastRegisteredDate: null,
+      startDate: null,
+      consecutiveDays: 0,
+      lastActivityDate: null
+    };
+
+    const elements = {
+      progressCircle: document.getElementById('progressCircle'),
+      dayNumber: document.getElementById('dayNumber'),
+      phaseBadge: document.getElementById('phaseBadge'),
+      blockNumber: document.getElementById('blockNumber'),
+      todayMinutes: document.getElementById('todayMinutes'),
+      requiredMinutes: document.getElementById('requiredMinutes'),
+      minutesInput: document.getElementById('minutesInput'),
+      btnRegister: document.getElementById('btnRegister'),
+      btnEmergency: document.getElementById('btnEmergency'),
+      btnReset: document.getElementById('btnReset'),
+      rewardAmount: document.getElementById('rewardAmount'),
+      rewardBar: document.getElementById('rewardBar'),
+      nextReward: document.getElementById('nextReward'),
+      daysUntilReward: document.getElementById('daysUntilReward'),
+      motivationText: document.getElementById('motivationText'),
+      emergencyAlert: document.getElementById('emergencyAlert'),
+      emergencyMessage: document.getElementById('emergencyMessage'),
+      scheduleBody: document.getElementById('scheduleBody'),
+      dateDisplay: document.getElementById('dateDisplay'),
+      consecutiveDays: document.getElementById('consecutiveDays'),
+      inactiveDays: document.getElementById('inactiveDays')
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem('retoState');
+        if (saved) {
+          state = JSON.parse(saved);
+          console.log('Estado cargado:', state);
+        }
+      } catch (e) {
+        console.error('Error cargando estado:', e);
+      }
+      checkDayRollover();
+      updateConsecutiveDays();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem('retoState', JSON.stringify(state));
+        console.log('Estado guardado:', state);
+      } catch (e) {
+        console.error('Error guardando estado:', e);
+      }
+    }
+
+    function getTodayKey() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function getFormattedDate() {
+      const today = new Date();
+      return today.toLocaleDateString('es-CR', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    }
+
+    function updateConsecutiveDays() {
+      const today = getTodayKey();
+      
+      if (!state.lastActivityDate) {
+        state.consecutiveDays = 0;
+      } else {
+        const lastDate = new Date(state.lastActivityDate);
+        const todayDate = new Date(today);
+        const diffTime = todayDate - lastDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 0) {
+          // Mismo día, no cambiar
+        } else if (diffDays === 1) {
+          // Un día después, mantener consecutivos
+          state.consecutiveDays += 1;
+        } else {
+          // Más de un día, resetear consecutivos
+          state.consecutiveDays = 0;
+        }
+      }
+
+      if (elements.consecutiveDays) {
+        elements.consecutiveDays.textContent = state.consecutiveDays;
+      }
+    }
+
+    function updateInactiveDaysDisplay() {
+      const today = getTodayKey();
+      let inactiveDays = 0;
+
+      if (state.lastActivityDate) {
+        const lastDate = new Date(state.lastActivityDate);
+        const todayDate = new Date(today);
+        const diffTime = todayDate - lastDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays > 1) {
+          inactiveDays = diffDays - 1;
+        }
+      }
+
+      if (elements.inactiveDays) {
+        elements.inactiveDays.textContent = inactiveDays;
+      }
+    }
+
+    function checkDayRollover() {
+      const today = getTodayKey();
+      if (state.lastRegisteredDate !== today) {
+        state.lastRegisteredDate = today;
+        state.emergencyConsecutiveDays = 0;
+        console.log('Nuevo día detectado:', today);
+      }
+    }
+
+    function getBlockInfo(day) {
+      if (day < 1) day = 1;
+      if (day > 66) day = 66;
+
+      if (day <= 11) return { ...CONFIG.blocks[0], blockStart: 1, blockEnd: 11 };
+      if (day <= 22) return { ...CONFIG.blocks[1], blockStart: 12, blockEnd: 22 };
+      if (day <= 33) return { ...CONFIG.blocks[2], blockStart: 23, blockEnd: 33 };
+      if (day <= 44) return { ...CONFIG.blocks[3], blockStart: 34, blockEnd: 44 };
+      if (day <= 55) return { ...CONFIG.blocks[4], blockStart: 45, blockEnd: 55 };
+      return { ...CONFIG.blocks[5], blockStart: 56, blockEnd: 66 };
+    }
+
+    function updateUI() {
+      console.log('Actualizando UI - Día:', state.currentDay);
+
+      // Actualizar fecha
+      if (elements.dateDisplay) {
+        elements.dateDisplay.textContent = getFormattedDate();
+      }
+
+      updateInactiveDaysDisplay();
+
+      const blockInfo = getBlockInfo(state.currentDay);
+      const daysInBlock = blockInfo.blockEnd - blockInfo.blockStart + 1;
+      const currentBlockDay = state.currentDay - blockInfo.blockStart;
+      const progressPercent = ((currentBlockDay) / daysInBlock) * 100;
+
+      console.log('Progreso bloque:', progressPercent + '%');
+
+      elements.progressCircle.style.setProperty('--progress', progressPercent + '%');
+      elements.dayNumber.textContent = String(state.currentDay).padStart(2, '0');
+      elements.phaseBadge.textContent = blockInfo.phase;
+      elements.blockNumber.textContent = blockInfo.block;
+      elements.requiredMinutes.textContent = blockInfo.time;
+
+      const todayKey = getTodayKey();
+      const todayMinutes = state.dailyLog[todayKey] || 0;
+      elements.todayMinutes.textContent = todayMinutes;
+
+      // Cálculo correcto de recompensa - por bloques completados
+      const completedDays = state.currentDay - 1;
+      const completedBlocks = Math.floor(completedDays / 11);
+      
+      let totalReward = 0;
+      for (let i = 0; i < completedBlocks && i < CONFIG.blocks.length; i++) {
+        totalReward += CONFIG.blocks[i].reward;
+      }
+
+      console.log('Bloques completados:', completedBlocks, 'Recompensa total:', totalReward);
+
+      elements.rewardAmount.textContent = '₡' + totalReward.toLocaleString();
+
+      const dayInBlock = ((state.currentDay - 1) % 11) + 1;
+      const rewardProgress = Math.min((dayInBlock / 11) * 100, 100);
+      elements.rewardBar.style.width = rewardProgress + '%';
+
+      const nextRewardDay = Math.ceil(state.currentDay / 11) * 11;
+      const daysUntil = Math.max(0, nextRewardDay - state.currentDay + 1);
+      elements.daysUntilReward.textContent = daysUntil;
+      elements.nextReward.textContent = '₡' + blockInfo.reward.toLocaleString();
+
+      if ((state.currentDay - 1) % 3 === 0) {
+        const motIndex = Math.floor((state.currentDay - 1) / 3) % CONFIG.motivations.length;
+        elements.motivationText.textContent = CONFIG.motivations[motIndex];
+      }
+
+      updateScheduleTable();
+      updateEmergencyAlert();
+    }
+
+    function updateScheduleTable() {
+      elements.scheduleBody.innerHTML = CONFIG.blocks.map((block, idx) => {
+        const blockStart = idx === 0 ? 1 : CONFIG.blocks[idx - 1].blockEnd + 1;
+        const blockEnd = block.blockEnd;
+        const isCurrent = state.currentDay >= blockStart && state.currentDay <= blockEnd;
+        const isCompleted = state.currentDay > blockEnd;
+
+        return `
+          <tr class="${isCurrent ? 'current-block' : ''} ${isCompleted ? 'completed-block' : ''}">
+            <td style="font-size: 12px;">${block.phase}</td>
+            <td class="block-label">${block.block}</td>
+            <td class="days-range">${block.days}</td>
+            <td><span class="time-badge">${block.time}m</span></td>
+            <td><span class="reward-badge">₡${(block.reward/1000).toFixed(1)}k</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function updateEmergencyAlert() {
+      if (state.emergencyConsecutiveDays > 0) {
+        elements.emergencyAlert.classList.add('show');
+        const dias = state.emergencyConsecutiveDays === 1 ? 'día' : 'días';
+        elements.emergencyMessage.textContent = `${state.emergencyConsecutiveDays} ${dias} emergencia. Máx: 2 consecutivos.`;
+      } else {
+        elements.emergencyAlert.classList.remove('show');
+      }
+    }
+
+    function registerDay() {
+      const minutesStr = elements.minutesInput.value.trim();
+      const minutes = minutesStr ? parseInt(minutesStr) : 0;
+
+      console.log('Registrando día con minutos:', minutes);
+
+      if (isNaN(minutes) || minutes < 0) {
+        alert('Por favor ingresa un valor válido');
+        return;
+      }
+
+      if (minutes > CONFIG.maxDailyMinutes) {
+        alert('Máximo ' + CONFIG.maxDailyMinutes + ' minutos');
+        return;
+      }
+
+      const blockInfo = getBlockInfo(state.currentDay);
+
+      if (minutes === 0) {
+        if (confirm('⚠️ Registrar 0 minutos reiniciará completamente el reto. ¿Continuar?')) {
+          console.log('Reiniciando por 0 minutos');
+          resetChallenge();
+        }
+        return;
+      }
+
+      if (minutes >= blockInfo.time) {
+        const todayKey = getTodayKey();
+        state.dailyLog[todayKey] = minutes;
+        state.lastActivityDate = todayKey;
+        state.emergencyConsecutiveDays = 0;
+        state.currentDay += 1;
+
+        // Inicializar fecha de inicio si es el primer registro
+        if (!state.startDate) {
+          state.startDate = todayKey;
+          console.log('Primera actividad registrada:', todayKey);
+        }
+
+        console.log('Día registrado exitosamente. Nuevo día:', state.currentDay);
+
+        if (state.currentDay > CONFIG.totalDays) {
+          state.currentDay = CONFIG.totalDays;
+          saveState();
+          updateUI();
+          updateConsecutiveDays();
+          alert('🎉 ¡FELICIDADES! ¡COMPLETASTE EL RETO DE 66 DÍAS! 🏆\n\nTu hábito está automatizado. Ahora sigue caminando por vida. 💪');
+          return;
+        }
+
+        elements.minutesInput.value = '';
+        saveState();
+        updateConsecutiveDays();
+        updateUI();
+      } else {
+        const necesitas = blockInfo.time - minutes;
+        alert(`Necesitas ${necesitas} minutos más (requiere ${blockInfo.time}, registraste ${minutes})`);
+      }
+    }
+
+    function registerEmergency() {
+      console.log('Registrando día de emergencia');
+
+      if (state.emergencyConsecutiveDays >= CONFIG.maxEmergencyDays) {
+        alert('Ya usaste los 2 días de emergencia. Debes completar el tiempo completo mañana.');
+        return;
+      }
+
+      const todayKey = getTodayKey();
+      state.dailyLog[todayKey] = CONFIG.minEmergencyMinutes;
+      state.lastActivityDate = todayKey;
+      state.emergencyConsecutiveDays += 1;
+      state.currentDay += 1;
+
+      // Inicializar fecha de inicio si es el primer registro
+      if (!state.startDate) {
+        state.startDate = todayKey;
+        console.log('Primera actividad registrada:', todayKey);
+      }
+
+      if (state.currentDay > CONFIG.totalDays) {
+        state.currentDay = CONFIG.totalDays;
+      }
+
+      console.log('Emergencia registrada. Nuevo día:', state.currentDay);
+
+      elements.minutesInput.value = '';
+      saveState();
+      updateConsecutiveDays();
+      updateUI();
+      alert('🔥 Emergencia registrada (10 min)\nMañana necesitarás completar el tiempo requerido');
+    }
+
+    function resetChallenge() {
+      console.log('Confirmando reinicio del reto');
+      const confirm_msg = confirm('⚠️ ¿REINICIAR completamente al Día 1?\nPerderás TODO el progreso.');
+      if (!confirm_msg) {
+        console.log('Reinicio cancelado');
+        return;
+      }
+
+      console.log('Reiniciando reto');
+      state.currentDay = 1;
+      state.dailyLog = {};
+      state.emergencyConsecutiveDays = 0;
+      state.lastRegisteredDate = null;
+      state.consecutiveDays = 0;
+      state.lastActivityDate = null;
+      state.startDate = null;
+      elements.minutesInput.value = '';
+      saveState();
+      updateConsecutiveDays();
+      updateUI();
+      alert('🔄 Reto reiniciado al Día 1\n¡Vamos de nuevo, campeón! 💪');
+    }
+
+    function initEventListeners() {
+      console.log('Inicializando event listeners');
+
+      if (elements.btnRegister) {
+        elements.btnRegister.addEventListener('click', (e) => {
+          e.preventDefault();
+          registerDay();
+        });
+      }
+
+      if (elements.btnEmergency) {
+        elements.btnEmergency.addEventListener('click', (e) => {
+          e.preventDefault();
+          registerEmergency();
+        });
+      }
+
+      if (elements.btnReset) {
+        elements.btnReset.addEventListener('click', (e) => {
+          e.preventDefault();
+          resetChallenge();
+        });
+      }
+
+      if (elements.minutesInput) {
+        elements.minutesInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            registerDay();
+          }
+        });
+      }
+
+      console.log('Event listeners listos');
+    }
+
+    function init() {
+      console.log('Inicializando aplicación...');
+      loadState();
+      initEventListeners();
+      updateUI();
+      updateConsecutiveDays();
+      console.log('Aplicación lista');
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>
